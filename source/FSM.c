@@ -1,4 +1,3 @@
-
 #include "driver/elevio.h"
 
 #include "FSM.h"
@@ -15,7 +14,15 @@ bool m_elevator_buttons[N_BUTTONS][N_FLOORS];
 
 void FSM_updateBtns();
 
-void FSM_emergencyStopRoutine_ifActivated();
+bool FSM_emergencyStopRoutine_ifActivated();
+
+
+
+
+
+bool FSM_checkIfArrivedAtFloor();
+
+
 
 
 
@@ -56,15 +63,10 @@ void FSM_init(){
 
 
 
-
-
-
-
-
 void FSM_update(){
 
 
-
+    FSM_updateBtns();
 
 
     switch(m_elevator_state)
@@ -83,20 +85,50 @@ void FSM_update(){
         break;
 
     case ElevatorStateIdle:
+
+        if(FSM_emergencyStopRoutine_ifActivated()){
+            m_elevator_state = ElevatorStateEmergency;
+            break;
+        }
+
+        if(FSM_checkIfArrivedAtFloor()){
+            m_elevator_state = ElevatorStateIdle;
+            break;
+        }
+
+        
+
+
         break;
     
     case ElevatorStateDown:
+        if(FSM_emergencyStopRoutine_ifActivated()){
+            m_elevator_state = ElevatorStateEmergency;
+            break;
+        }
+
+        if(FSM_checkIfArrivedAtFloor()){
+            m_elevator_state = ElevatorStateIdle;
+            break;
+        }
+
         break;
     
     case ElevatorStateUp:
+        if(FSM_emergencyStopRoutine_ifActivated()){
+            m_elevator_state = ElevatorStateEmergency;
+            break;
+        }
+
         break;
 
     case ElevatorStateEmergency:
+        
         break;
 
         
     default:
-    exit();
+        exit();
         break;
     }
 

@@ -8,13 +8,13 @@
 #include <driver/elevio.h>
 
 
-typedef enum {
+typedef enum ElevatorDirection{
     ElevatorDirectionDown = 0,
     ElevatorDirectionUp,
     ElevatorNoDirection
 } ElevatorDirection;
 
-typedef enum {
+typedef enum ElevatorState{
     ElevatorStateInit = 0,
     ElevatorStateIdle,
     ElevatorStateDown,
@@ -22,7 +22,7 @@ typedef enum {
     ElevatorStateEmergency
 } ElevatorState;
 
-typedef struct {
+typedef struct ElevatorVariables{
     bool door;
     bool obstruction;
     bool emergency_btn;
