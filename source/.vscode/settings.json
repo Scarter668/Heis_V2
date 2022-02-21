@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "elevio.h": "c",
+        "queue.h": "c",
+        "time.h": "c",
+        "cmath": "c",
+        "netdb.h": "c"
+    }
+}
