@@ -12,18 +12,35 @@ static ElevatorVariables m_elevator_variables;
 bool m_elevator_buttons[N_BUTTONS][N_FLOORS];
 
 
-void FSM_updateBtns();
+void FSM_updateBtns() {
+    for ( int b = 0; b < N_BUTTONS; b++ ) {
+        for ( int f = 0; f < N_FLOORS; f++ ) {
+            if ( m_elevator_buttons[b][f] == 0 ) {
+                m_elevator_buttons[b][f] = elevio_callButton(f,b);
+            }
+            
+        }
+    }
+}
+
+void FSM_updateLights() {
+    for ( int b = )
+
+}
+
+void FSM_updateFloorLevel() {
+        
+}
+
+
+bool FSM_checkIfArrivedAtFloor() {
+    // Stoppe motoren, åpne døren/start timer , slette bestillinger til floor, oppdatere floor level
+    // Sjekke om bestilling til floor, ellers returner false
+
+}
+
 
 bool FSM_emergencyStopRoutine_ifActivated();
-
-
-
-
-
-bool FSM_checkIfArrivedAtFloor();
-
-
-
 
 
 void FSM_init(){
@@ -80,8 +97,6 @@ void FSM_update(){
             m_elevator_state = ElevatorStateIdle;
         }   
 
-
-
         break;
 
     case ElevatorStateIdle:
@@ -96,7 +111,7 @@ void FSM_update(){
             break;
         }
 
-        
+
 
 
         break;
