@@ -89,7 +89,7 @@ void FSM_IdleEntry() {
 }
 
 
-bool FSM_EmergencyEntry() {
+void FSM_EmergencyEntry() {
     // stopp motoren, skru på stopp-lys, åpne dørene hvis etasje
     elevio_motorDirection(DIRN_STOP);
     elevio_stopLamp(true);
@@ -215,12 +215,14 @@ void FSM_update(){
     {
     case ElevatorStateInit:
         
-        int floor = elevio_floorSensor();
-        if( floor  != NO_FLOOR){
-            elevio_motorDirection(DIRN_STOP);
-            m_elevator_variables.floor_level = (double) floor;
-            m_elevator_state = ElevatorStateIdle;
-        }   
+        {
+            int floor = elevio_floorSensor();
+            if( floor  != NO_FLOOR){
+                elevio_motorDirection(DIRN_STOP);
+                m_elevator_variables.floor_level = (double) floor;
+                m_elevator_state = ElevatorStateIdle;
+            }   
+        }  
 
         break;
 
@@ -258,7 +260,7 @@ void FSM_update(){
 
                 case SHOULD_STAY:
                     m_elevator_variables.direction = ElevatorDirectionNeutral;
-                    FSM_setDoors(true);
+                    FSM_setDoor(true);
 
                     break;
 
@@ -332,7 +334,6 @@ void FSM_update(){
 
         
     default:
-        exit();
         break;
     }
 

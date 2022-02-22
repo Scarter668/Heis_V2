@@ -19,7 +19,6 @@
 
 
 
-static bool stop = false;
 
 int main(){
     
