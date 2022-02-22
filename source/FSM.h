@@ -15,11 +15,11 @@ typedef enum ElevatorDirection{
 } ElevatorDirection;
 
 typedef enum ElevatorState{
-    ElevatorStateInit = 0,
-    ElevatorStateIdle,
-    ElevatorStateDown,
-    ElevatorStateUp,
-    ElevatorStateEmergency
+    ElevatorStateInit = 0,   //0
+    ElevatorStateIdle,         //1
+    ElevatorStateDown,          //2
+    ElevatorStateUp,            //3
+    ElevatorStateEmergency      //4
 } ElevatorState;
 
 typedef struct ElevatorVariables{

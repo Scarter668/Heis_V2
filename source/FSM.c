@@ -4,6 +4,8 @@
 #include "timer.h"
 #include <assert.h>
 
+#include "stdio.h"
+
 
 #define SHOULD_UP 1
 #define SHOULD_STAY 0
@@ -24,10 +26,14 @@ void FSM_updateBtnsAndLights() {
     bool var_elevio_callButton;
     for ( int button = 0; button < N_BUTTONS; button++ ) {
         for ( int floor = 0; floor < N_FLOORS; floor++ ) {
-            var_elevio_callButton = elevio_callButton(floor, button);
-            if ( var_elevio_callButton ) {
-                m_elevator_buttons[button][floor] = var_elevio_callButton;
-                elevio_buttonLamp(floor, button, true);
+            if(!((button == BUTTON_HALL_DOWN && floor == 0) || (button == BUTTON_HALL_UP && floor == N_FLOORS-1))){
+                printf(" floor  %d, and button %d\n", floor, button);
+                var_elevio_callButton = elevio_callButton(floor, button);
+                printf(" 2 -- floor  %d, and button %d\n", floor, button);
+                if ( var_elevio_callButton ) {
+                    m_elevator_buttons[button][floor] = var_elevio_callButton;
+                    elevio_buttonLamp(floor, button, true);
+                }
             }
         }
     }
@@ -46,12 +52,15 @@ bool FSM_IdleTrigger() {
     assert( m_elevator_variables.direction != ElevatorDirectionNeutral );
     int elevio_floor = elevio_floorSensor();
     if ( elevio_floor != NO_FLOOR ) { // hvis floor 
-        elevio_floorIndicator( (int) elevio_floor );
-        if ( (m_elevator_variables.direction == ElevatorDirectionUp && m_elevator_buttons[BUTTON_HALL_UP][elevio_floor])
+        elevio_floorIndicator( elevio_floor );
+        if ( (m_elevator_variables.direction == ElevatorDirectionUp && (m_elevator_buttons[BUTTON_HALL_UP][elevio_floor] || elevio_floor == N_FLOORS -1))
             || (m_elevator_buttons[BUTTON_CAB][elevio_floor]) 
-            || (m_elevator_variables.direction == ElevatorDirectionDown && m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor])) {
+            || (m_elevator_variables.direction == ElevatorDirectionDown && (m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor]  || elevio_floor == 0))){
+
+
                 // hvis floor med bestilling med samme retning
                 m_elevator_variables.floor_level = (double) elevio_floor;
+                printf("Floor level %d\n", (int)m_elevator_variables.floor_level);
                 return true; // kjører videre arrivedAtRequestedFloorRoutine()
         }
         // hvis ikke floor med bestilling i samme retning
@@ -78,13 +87,18 @@ void FSM_setDoor(bool b) {
 
 
 void FSM_IdleEntry() {
+
+    printf(" IN entry\n");
     // Stopp motoren, åpne dør/start timer, slette bestillinger til floor
     elevio_motorDirection(DIRN_STOP);
     elevio_doorOpenLamp(m_elevator_variables.floor_level);
     for ( int button = 0; button < N_BUTTONS; button++ ) {
         m_elevator_buttons[button][(int) m_elevator_variables.floor_level] = false;
-        elevio_buttonLamp((int) m_elevator_variables.floor_level, button, false);
+        int floor  =  (int) m_elevator_variables.floor_level;
+        elevio_buttonLamp(floor , button, false);
+        printf("Turned of light at floor %d, button type %d\n",(int)m_elevator_variables.floor_level, button );
     }
+    printf(" going out of entry\n");
 
 }
 
@@ -208,8 +222,14 @@ int FSM_IdleRoutine_direction(){
 
 void FSM_update(){
 
-    m_elevator_variables.emergency_btn = elevio_stopButton();
-    m_elevator_variables.obstruction = elevio_obstruction();
+    printf(" reading vairables, state = %d\n", m_elevator_state);
+    //m_elevator_variables.emergency_btn = elevio_stopButton();
+    //m_elevator_variables.obstruction = elevio_obstruction();
+    
+    
+    printf("Adter reading\n");
+    printf("Current floor leve %f\n\n", m_elevator_variables.floor_level);
+
 
     switch(m_elevator_state)
     {
@@ -221,6 +241,7 @@ void FSM_update(){
                 elevio_motorDirection(DIRN_STOP);
                 m_elevator_variables.floor_level = (double) floor;
                 m_elevator_state = ElevatorStateIdle;
+                elevio_floorIndicator(floor);
             }   
         }  
 
@@ -229,7 +250,12 @@ void FSM_update(){
 
     case ElevatorStateIdle:
 
+        printf("In idle\n");
+
         FSM_updateBtnsAndLights();
+
+        printf("In idle; after update\n");
+
 
         if(m_elevator_variables.emergency_btn){
             FSM_EmergencyEntry();
@@ -247,6 +273,9 @@ void FSM_update(){
             FSM_setDoor(false);
 
         }
+
+        printf("In idle, before checking of doors\n");
+
 
         if(m_elevator_variables.door == false){
             int decision = FSM_IdleRoutine_direction();
@@ -313,12 +342,14 @@ void FSM_update(){
             break;
         }
 
-        if(FSM_IdleTrigger()){
-            
+        if(FSM_IdleTrigger()){   
+            printf("UP: Floor level %f\n", m_elevator_variables.floor_level);         
             FSM_IdleEntry();
             m_elevator_state = ElevatorStateIdle;
             break;
         }
+
+        printf("after entry check\n");
 
 
 
