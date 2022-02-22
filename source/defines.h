@@ -12,6 +12,4 @@
 #define true 1
 #define false 0
 
-#define NUMBER_OF_BUTTONS 10
-
 #define NO_FLOOR -1

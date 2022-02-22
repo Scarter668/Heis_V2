@@ -11,7 +11,7 @@
 typedef enum ElevatorDirection{
     ElevatorDirectionDown = 0,
     ElevatorDirectionUp,
-    ElevatorDirectionNewtral
+    ElevatorDirectionNeutral
 } ElevatorDirection;
 
 typedef enum ElevatorState{
