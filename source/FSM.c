@@ -96,7 +96,7 @@ void FSM_updateBtnsAndLights() {
 
 
 bool orderAbovefloor(int floor){
-   for(int f = ++floor; f < N_FLOORS; floor++ ){
+   for(int f = ++floor; f < N_FLOORS; f++ ){
         
         for(int button = 0; button < N_BUTTONS; button++){
 
@@ -139,10 +139,10 @@ bool FSM_IdleTrigger() {
             || (m_elevator_buttons[BUTTON_CAB][elevio_floor]) 
             || (m_elevator_variables.direction == ElevatorDirectionDown && (m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor]  || !orderBelowfloor(elevio_floor) ) )){
 
-                printf("Precheck : \t %d\n", (m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor]));
-                printf("Below Check: %d\n",!orderBelowfloor(elevio_floor) );
-                printf("Inside IDle trigger---------------------------------------------------------------------- true : %d\n", m_elevator_variables.direction == ElevatorDirectionDown  );
-                // hvis floor med bestilling med samme retning
+                // printf("Precheck : \t %d\n", (m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor]));
+                // printf("Below Check: %d\n",!orderBelowfloor(elevio_floor) );
+                // printf("Inside IDle trigger---------------------------------------------------------------------- true : %d\n", m_elevator_variables.direction == ElevatorDirectionDown  );
+                // // hvis floor med bestilling med samme retning
                 m_elevator_variables.floor_level = (double) elevio_floor;
                 //printf("Floor level %d\n", (int)m_elevator_variables.floor_level);
                 return true; // kjører videre arrivedAtRequestedFloorRoutine()
