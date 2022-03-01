@@ -11,8 +11,6 @@
 #define SHOULD_DOWN -1
 #define NO_DECISION -11
 
-bool stop = 0;
-
 static ElevatorState m_elevator_state;
 static ElevatorVariables m_elevator_variables;
 
@@ -241,6 +239,7 @@ void FSM_init()
     }
 
     m_elevator_state = ElevatorStateInit;
+    elevio_stopLamp(false);
 }
 
 int FSM_IdleRoutine_direction()
