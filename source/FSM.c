@@ -55,15 +55,15 @@ void printStates(){
         printf("Elevator Direction:  Down\n");
         break;
     case ElevatorDirectionUp:
-        printf("Elevator Direction:  Down\n");
+        printf("Elevator Direction:  Up\n");
         break;
     case ElevatorDirectionNeutral:
-        printf("Elevator Direction:  Down\n");
+        printf("Elevator Direction:  Newtral\n");
         break;
     default:
         break;
     }
-    printf("Floor level:\t%f", m_elevator_variables.floor_level);
+    printf("Floor level:\t%f\n\n", m_elevator_variables.floor_level);
 
 
 
