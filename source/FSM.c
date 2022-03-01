@@ -94,6 +94,37 @@ void FSM_updateBtnsAndLights() {
 
 
 
+
+bool orderAbovefloor(int floor){
+   for(int f = ++floor; f < N_FLOORS; floor++ ){
+        
+        for(int button = 0; button < N_BUTTONS; button++){
+
+            if(m_elevator_buttons[button][floor]){
+                return true;
+            }
+
+        }
+    }
+    return false;
+}
+
+
+bool orderBelowfloor(int floor){
+   for(int f = --floor; f >= 0; f-- ){
+        
+        for(int button = 0; button < N_BUTTONS; button++){
+
+            if(m_elevator_buttons[button][floor]){
+                return true;
+            }
+
+        }
+    }
+    return false;
+}
+
+
 // Rader: UP, DOWN, CAB
 // Kolonner: 0, 1, 2, 3
 
@@ -104,9 +135,9 @@ bool FSM_IdleTrigger() {
     int elevio_floor = elevio_floorSensor();
     if ( elevio_floor != NO_FLOOR ) { // hvis floor 
         elevio_floorIndicator( elevio_floor );
-        if ( (m_elevator_variables.direction == ElevatorDirectionUp && (m_elevator_buttons[BUTTON_HALL_UP][elevio_floor] || elevio_floor == N_FLOORS -1))
+        if ( (m_elevator_variables.direction == ElevatorDirectionUp && (m_elevator_buttons[BUTTON_HALL_UP][elevio_floor] || !orderAbovefloor(elevio_floor)))
             || (m_elevator_buttons[BUTTON_CAB][elevio_floor]) 
-            || (m_elevator_variables.direction == ElevatorDirectionDown && (m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor]  || elevio_floor == 0))){
+            || (m_elevator_variables.direction == ElevatorDirectionDown && (m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor]  || !orderBelowfloor(elevio_floor) ) )){
 
 
                 // hvis floor med bestilling med samme retning
