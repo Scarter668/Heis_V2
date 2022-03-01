@@ -207,7 +207,8 @@ void FSM_EmergencyEntry()
     {
         for (int floor = 0; floor < N_FLOORS; floor++)
         {
-            m_elevator_buttons[button][floor] = 0;
+            m_elevator_buttons[button][floor] = false;
+            elevio_buttonLamp(floor, button, false);
         }
     }
 }
