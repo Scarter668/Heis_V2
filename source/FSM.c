@@ -458,6 +458,7 @@ void FSM_update(){
         
         if(m_elevator_variables.emergency_btn == false){
             m_elevator_state = ElevatorStateIdle;
+            m_elevator_variables.direction = ElevatorDirectionNeutral;
             timer_start();
         }
         break;
