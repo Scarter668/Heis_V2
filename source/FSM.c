@@ -13,7 +13,7 @@
 #define NO_DECISION -11
 
 
-
+bool  stop = 0;
 
 
 static ElevatorState m_elevator_state;
@@ -311,9 +311,14 @@ int FSM_IdleRoutine_direction(){
 void FSM_update(){
 
     //printf(" reading vairables, state = %d\n", m_elevator_state);
-    m_elevator_variables.emergency_btn = elevio_stopButton();
-    m_elevator_variables.obstruction = elevio_obstruction();
     
+    if(elevio_stopButton())
+        stop = !stop;
+    )
+    m_elevator_variables.emergency_btn = stop;
+
+    
+    m_elevator_variables.obstruction = elevio_obstruction();
     
     //printf("Adter reading\n");
     //printf("Current floor leve %f\n\n", m_elevator_variables.floor_level);
