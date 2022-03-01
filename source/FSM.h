@@ -30,7 +30,14 @@ typedef struct ElevatorVariables{
     double floor_level;
 } ElevatorVariables;
 
+/**
+ * @brief Initializes the finite-state machine
+ */
 void FSM_init();
+
+/**
+ * @brief Updates the finite-state machine
+ */
 void FSM_update();
 
 

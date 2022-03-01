@@ -6,33 +6,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-
+#include "timer.h"
 
 #include "FSM.h"
 
+int main()
+{
 
-
-
-
-// test BENJAMIN
-
-
-
-
-int main(){
-    
+    elevio_init();
+    timer_init();
     FSM_init();
-    
-    printf("=== Example Program ===\n");
-    printf("Press the stop button on the elevator panel to exit\n");
 
-    while(1){
-        
+    while (1)
+    {
+
         FSM_update();
 
-        nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
-    
+        nanosleep(&(struct timespec){0, 20 * 1000 * 1000}, NULL);
     }
 
     return 0;

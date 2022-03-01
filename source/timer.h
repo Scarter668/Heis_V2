@@ -5,24 +5,18 @@
 
 #pragma once
 
-
 #include <time.h>
 #include "defines.h"
-
-
 
 /**
  * @brief The timeout lenght in seconds
  */
 #define TIMEOUT_LENGHT 3.0
 
-
-
 /**
  * @brief Starts the timer by registering the current time.
  */
 void timer_start();
-
 
 /**
  * @brief Checks if a timer is active
@@ -38,14 +32,7 @@ bool timer_isActive();
  */
 bool timer_isTimeout();
 
-
 /**
  * @brief Initiates the static variables used by timer
  */
 void timer_init();
-
-
-/**
- * @brief Stop timer by setting the timer to false.
- */
-void timer_stop();
