@@ -100,7 +100,7 @@ bool orderAbovefloor(int floor){
         
         for(int button = 0; button < N_BUTTONS; button++){
 
-            if(m_elevator_buttons[button][floor]){
+            if(m_elevator_buttons[button][f]){
                 return true;
             }
 
@@ -115,7 +115,7 @@ bool orderBelowfloor(int floor){
         
         for(int button = 0; button < N_BUTTONS; button++){
 
-            if(m_elevator_buttons[button][floor]){
+            if(m_elevator_buttons[button][f]){
                 return true;
             }
 
