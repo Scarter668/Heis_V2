@@ -468,6 +468,7 @@ void FSM_update()
         {
             m_elevator_state = ElevatorStateIdle;
             m_elevator_variables.direction = ElevatorDirectionNeutral;
+            elevio_stopLamp(false);
             timer_start();
         }
         break;
