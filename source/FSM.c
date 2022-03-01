@@ -320,12 +320,7 @@ void FSM_update()
 
     // printf(" reading vairables, state = %d\n", m_elevator_state);
 
-    if (elevio_stopButton())
-    {
-        stop = !stop;
-    }
-    m_elevator_variables.emergency_btn = stop;
-
+    m_elevator_variables.emergency_btn = elevio_stopButton();
     m_elevator_variables.obstruction = elevio_obstruction();
 
     // printf("Adter reading\n");
