@@ -76,18 +76,18 @@ void FSM_updateBtnsAndLights() {
     for ( int button = 0; button < N_BUTTONS; button++ ) {
         for ( int floor = 0; floor < N_FLOORS; floor++ ) {
             if(!((button == BUTTON_HALL_DOWN && floor == 0) || (button == BUTTON_HALL_UP && floor == N_FLOORS-1))){
-                printf(" floor  %d, and button %d\n", floor, button);
+                //printf(" floor  %d, and button %d\n", floor, button);
                 var_elevio_callButton = elevio_callButton(floor, button);
                 if ( var_elevio_callButton ) {
                     m_elevator_buttons[button][floor] = var_elevio_callButton;
                     elevio_buttonLamp(floor, button, true);
-                    printf(" 2 -- floor  %d, and button %d\n", floor, button);
+                    //printf(" 2 -- floor  %d, and button %d\n", floor, button);
                 }
             }
         }
     }
         
-    printf("After updated buttons");
+    //printf("After updated buttons");
 }
 
 
@@ -111,7 +111,7 @@ bool FSM_IdleTrigger() {
 
                 // hvis floor med bestilling med samme retning
                 m_elevator_variables.floor_level = (double) elevio_floor;
-                printf("Floor level %d\n", (int)m_elevator_variables.floor_level);
+                //printf("Floor level %d\n", (int)m_elevator_variables.floor_level);
                 return true; // kjører videre arrivedAtRequestedFloorRoutine()
         }
         // hvis ikke floor med bestilling i samme retning
@@ -305,11 +305,11 @@ void FSM_update(){
 
     case ElevatorStateIdle:
 
-        printf("In idle\n");
+        //printf("In idle\n");
 
         FSM_updateBtnsAndLights();
 
-        printf("In idle; after update\n");
+        //printf("In idle; after update\n");
 
 
         if(m_elevator_variables.emergency_btn){
@@ -329,7 +329,7 @@ void FSM_update(){
 
         }
 
-        printf("In idle, before checking of doors\n");
+        //printf("In idle, before checking of doors\n");
 
 
         if(m_elevator_variables.door == false){
@@ -404,13 +404,13 @@ void FSM_update(){
         }
 
         if(FSM_IdleTrigger()){   
-            printf("UP: Floor level %f\n", m_elevator_variables.floor_level);         
+            //printf("UP: Floor level %f\n", m_elevator_variables.floor_level);         
             FSM_IdleEntry();
             m_elevator_state = ElevatorStateIdle;
             break;
         }
 
-        printf("after entry check\n");
+        //printf("after entry check\n");
 
 
 
