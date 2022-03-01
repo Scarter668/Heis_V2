@@ -312,9 +312,9 @@ void FSM_update(){
 
     //printf(" reading vairables, state = %d\n", m_elevator_state);
     
-    if(elevio_stopButton())
+    if(elevio_stopButton()){
         stop = !stop;
-    )
+    }
     m_elevator_variables.emergency_btn = stop;
 
     
