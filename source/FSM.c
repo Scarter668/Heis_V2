@@ -1,4 +1,7 @@
-#include "driver/elevio.h"
+/**
+ * @file
+ * @brief Implementation of funtions from FSM.h
+ */
 
 #include "FSM.h"
 #include "timer.h"
@@ -6,15 +9,29 @@
 
 #include "stdio.h"
 
+
+//Differnt defines for more readability
 #define SHOULD_UP 1
 #define SHOULD_STAY 0
 #define SHOULD_DOWN -1
 #define NO_DECISION -11
 
+
+/**
+ * @brief static global variabel for the state of elevator
+ */
 static ElevatorState m_elevator_state;
+/**
+ * @brief static global variabel for the ElevatorVariables struct
+ */
 static ElevatorVariables m_elevator_variables;
 
-bool m_elevator_buttons[N_BUTTONS][N_FLOORS];
+/**
+ * @brief static array keeping all the buttons of the elevator
+ *        Rows correspond to type of button: UP, DOWN, CAB
+ *        Coloumns refer to the 0-indexed floor level: 0, 1, 2, 3
+ */
+static bool m_elevator_buttons[N_BUTTONS][N_FLOORS];
 
 void printStates(){
     switch (m_elevator_state)
@@ -80,6 +97,12 @@ void FSM_init(){
     elevio_stopLamp(false);
 }
 
+
+/**
+ * @brief Updates @p m_elevator_buttons array with the new values from elevio.
+ *        Only updates if there is not an active order. Also sets the corresponding 
+ *        buttonlights according to the array.  
+ */
 void FSM_updateBtnsAndLights(){
     bool var_elevio_callButton;
     for (int button = 0; button < N_BUTTONS; button++){
@@ -112,26 +135,34 @@ bool FSM_orderBelowfloor(int floor){
 }
 
 void FSM_setDoor(bool open){
-    // door = true, sette lyset, starte timer
-    if (open){
+    
+    if (open){// door = true, turn off light, start timer
         m_elevator_variables.door = true;
         elevio_doorOpenLamp(true);
         timer_start();
     
-    } else{
+    } else{ // door = false, turn on light
         m_elevator_variables.door = false;
         elevio_doorOpenLamp(false);
     }
 }
-// Rader: UP, DOWN, CAB
-// Kolonner: 0, 1, 2, 3
 
+
+/**
+ * @brief Checks if the elevator should stop and to enter an Idle state.
+ *        Is elevator on a floor with orders.
+ *        If not and on a floor, update the @p floor_level variable to floor pluss/minus 0.5
+ *        depending on the direction.
+ *    
+ * @return @c true or @c false depending on whether the idle entry condition are met.
+ */
 bool FSM_IdleTrigger(){
-    // Sjekke om vi er på floor med orders
-    // Hvis ikke -> Oppdatere floor level til floor pluss/minus en halv
+    // check if we are on a floor with orders
+    // if not -> Update floor_level to floor pluss/minus 0.5
     assert(m_elevator_variables.direction != ElevatorDirectionNeutral);
     int elevio_floor = elevio_floorSensor();
-    if (elevio_floor != NO_FLOOR){ // hvis floor
+
+    if (elevio_floor != NO_FLOOR){ // if on floor
         elevio_floorIndicator(elevio_floor);
         if ((m_elevator_variables.direction == ElevatorDirectionUp 
                     && (m_elevator_buttons[BUTTON_HALL_UP][elevio_floor] 
@@ -143,12 +174,12 @@ bool FSM_IdleTrigger(){
                     && (m_elevator_buttons[BUTTON_HALL_DOWN][elevio_floor] 
                             || !FSM_orderBelowfloor(elevio_floor))))
         {
-            // // hvis floor med bestilling med samme retning
+            // if on floor with order with same direction as elevator or furthest order in that diretion
             m_elevator_variables.floor_level = (double)elevio_floor;
-            return true; // kjører videre arrivedAtRequestedFloorRoutine()
+            return true;         
         }
         
-        // hvis ikke floor med bestilling i samme retning
+        // if condition above are not met
         if (m_elevator_variables.direction == ElevatorDirectionUp){
             
             m_elevator_variables.floor_level = (double)elevio_floor + 0.5;
@@ -160,8 +191,13 @@ bool FSM_IdleTrigger(){
     return false;
 }
 
+
+/**
+* @brief Completes the routine that should be done everytime the elevator enter Idle state.
+*        That is to stop the motor, open the door, and remove orders on the floor
+*        and turn off their corresponding lights
+*/
 void FSM_IdleEntry(){
-    //  Stopp motoren, åpne dør/start timer, slette bestillinger til floor
     elevio_motorDirection(DIRN_STOP);
     FSM_setDoor(true);
     for (int button = 0; button < N_BUTTONS; button++){
@@ -171,6 +207,11 @@ void FSM_IdleEntry(){
     }
 }
 
+/**
+* @brief Completes the routine that should be done whenever emergency state is entered.
+*        Thid includes stoping the motor, turnin on the stoplamp, deleting all orders in the @p m_elevator_buttons array.
+*        If the elevator is on a floor, the door is also be opened.
+*/
 void FSM_EmergencyEntry(){
     // stopp motoren, skru på stopp-lys, åpne dørene hvis etasje, slett alle bestillinger
     elevio_motorDirection(DIRN_STOP);
@@ -187,7 +228,11 @@ void FSM_EmergencyEntry(){
 }
 
 /**
- * @brief Generates correct decision for elevator.
+ * @brief Generates correct decision for elevator to be used in Idle state when makin a decition of what to do next.
+ *        This loops throught the @p m_elevator_buttons array differently depending on what direction the elevator has.
+ *        If the elevator has a direction up, it loops through the upper part of the array, and vice versa for direction down.
+ *        If the elevator is in a nuetral direction, it loops through the array from the first floor and up (and return as soon as an order is found unless it is the floor you are).
+ *        This means that floor lower floor levels will be prioritized.   
  *
  * @return @c SHOULD_UP , @c SHOULD_STAY , @c SHOULD_DOWN or @c NO_DECISION depending on the current orders.
  */
