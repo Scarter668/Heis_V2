@@ -107,7 +107,7 @@ void FSM_updateBtnsAndLights(){
     bool var_elevio_callButton;
     for (int button = 0; button < N_BUTTONS; button++){
         for (int floor = 0; floor < N_FLOORS; floor++){ 
-            var_elevio_callButton = elevio_callButton(floor, button); //går bra å sjekke knapper som ikke finnes da elevio returnerer 0 uansett
+            var_elevio_callButton = elevio_callButton(floor, button); 
             if (var_elevio_callButton){
                 m_elevator_buttons[button][floor] = var_elevio_callButton;
                 elevio_buttonLamp(floor, button, true);
@@ -213,7 +213,6 @@ void FSM_IdleEntry(){
 *        If the elevator is on a floor, the door is also be opened.
 */
 void FSM_EmergencyEntry(){
-    // stopp motoren, skru på stopp-lys, åpne dørene hvis etasje, slett alle bestillinger
     elevio_motorDirection(DIRN_STOP);
     elevio_stopLamp(true);
     if (elevio_floorSensor() != NO_FLOOR){
