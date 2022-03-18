@@ -10,7 +10,7 @@
 #include "stdio.h"
 
 
-//Differnt defines for more readability
+//Different defines for more readability
 #define SHOULD_UP 1
 #define SHOULD_STAY 0
 #define SHOULD_DOWN -1
@@ -18,11 +18,11 @@
 
 
 /**
- * @brief static global variabel for the state of elevator
+ * @brief Static global variable for the state of elevator.
  */
 static ElevatorState m_elevator_state;
 /**
- * @brief static global variabel for the ElevatorVariables struct
+ * @brief Static global variable for the ElevatorVariables struct.
  */
 static ElevatorVariables m_elevator_variables;
 

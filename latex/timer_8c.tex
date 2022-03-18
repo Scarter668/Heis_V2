@@ -1,0 +1,66 @@
+\hypertarget{timer_8c}{}\doxysection{source/timer.c File Reference}
+\label{timer_8c}\index{source/timer.c@{source/timer.c}}
+
+
+Implementation file for \mbox{\hyperlink{timer_8h}{timer.\+h}}.  
+
+
+{\ttfamily \#include \char`\"{}timer.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{timer_8c_a161432848a326da3a1ea7765fc2bc023}\label{timer_8c_a161432848a326da3a1ea7765fc2bc023}} 
+void \mbox{\hyperlink{timer_8c_a161432848a326da3a1ea7765fc2bc023}{timer\+\_\+start}} ()
+\begin{DoxyCompactList}\small\item\em Starts the timer by registering the current time. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{timer_8c_aa04078f48a0e8f5b6860a393ad06b535}\label{timer_8c_aa04078f48a0e8f5b6860a393ad06b535}} 
+void {\bfseries timer\+\_\+stop} ()
+\item 
+\mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} \mbox{\hyperlink{timer_8c_add580c76ca36df44bb28e2fd8e21773b}{timer\+\_\+is\+Active}} ()
+\begin{DoxyCompactList}\small\item\em Checks if a timer is active. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} \mbox{\hyperlink{timer_8c_a396175a7362db34d036998339201d6d6}{timer\+\_\+is\+Timeout}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the timer has timed out, and deactivates it if so. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{timer_8c_a896a4c37c6ecf8868ef0dc758e5a598c}\label{timer_8c_a896a4c37c6ecf8868ef0dc758e5a598c}} 
+void \mbox{\hyperlink{timer_8c_a896a4c37c6ecf8868ef0dc758e5a598c}{timer\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initiates the static variables used by timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation file for \mbox{\hyperlink{timer_8h}{timer.\+h}}. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{timer_8c_add580c76ca36df44bb28e2fd8e21773b}\label{timer_8c_add580c76ca36df44bb28e2fd8e21773b}} 
+\index{timer.c@{timer.c}!timer\_isActive@{timer\_isActive}}
+\index{timer\_isActive@{timer\_isActive}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{timer\_isActive()}{timer\_isActive()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} timer\+\_\+is\+Active (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks if a timer is active. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} or {\ttfamily false} depending on {\ttfamily m\+\_\+active\+\_\+timer} 
+\end{DoxyReturn}
+
+
+Definition at line 34 of file timer.\+c.
+
+\mbox{\Hypertarget{timer_8c_a396175a7362db34d036998339201d6d6}\label{timer_8c_a396175a7362db34d036998339201d6d6}} 
+\index{timer.c@{timer.c}!timer\_isTimeout@{timer\_isTimeout}}
+\index{timer\_isTimeout@{timer\_isTimeout}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{timer\_isTimeout()}{timer\_isTimeout()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} timer\+\_\+is\+Timeout (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the timer has timed out, and deactivates it if so. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} or {\ttfamily false} depending on the duration of the timer 
+\end{DoxyReturn}
+
+
+Definition at line 38 of file timer.\+c.
+

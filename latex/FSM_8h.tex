@@ -1,0 +1,59 @@
+\hypertarget{FSM_8h}{}\doxysection{source/\+F\+SM.h File Reference}
+\label{FSM_8h}\index{source/FSM.h@{source/FSM.h}}
+
+
+Headerfile for finite state machine.  
+
+
+{\ttfamily \#include \char`\"{}defines.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}driver/elevio.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structElevatorVariables}{Elevator\+Variables}}
+\begin{DoxyCompactList}\small\item\em Struct to hold the different variables required to operate the elevator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{FSM_8h_a689d61e5377f8a2286b2f0265050d03e}\label{FSM_8h_a689d61e5377f8a2286b2f0265050d03e}} 
+typedef enum \mbox{\hyperlink{FSM_8h_a78fcbde4d2251075617fb22730589ca4}{Elevator\+Direction}} \mbox{\hyperlink{FSM_8h_a689d61e5377f8a2286b2f0265050d03e}{Elevator\+Direction}}
+\begin{DoxyCompactList}\small\item\em Enum to hold the three different elevator directions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8h_a422a07b2394d667ab486f56946385c16}\label{FSM_8h_a422a07b2394d667ab486f56946385c16}} 
+typedef enum \mbox{\hyperlink{FSM_8h_ada8a6679b36fc4f29442334494afb588}{Elevator\+State}} \mbox{\hyperlink{FSM_8h_a422a07b2394d667ab486f56946385c16}{Elevator\+State}}
+\begin{DoxyCompactList}\small\item\em Defining enum whit all the different F\+SM states. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8h_a46419c44eace02ea8257e5756d844892}\label{FSM_8h_a46419c44eace02ea8257e5756d844892}} 
+typedef struct \mbox{\hyperlink{structElevatorVariables}{Elevator\+Variables}} \mbox{\hyperlink{FSM_8h_a46419c44eace02ea8257e5756d844892}{Elevator\+Variables}}
+\begin{DoxyCompactList}\small\item\em Struct to hold the different variables required to operate the elevator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{FSM_8h_a78fcbde4d2251075617fb22730589ca4}\label{FSM_8h_a78fcbde4d2251075617fb22730589ca4}} 
+enum \mbox{\hyperlink{FSM_8h_a78fcbde4d2251075617fb22730589ca4}{Elevator\+Direction}} \{ {\bfseries Elevator\+Direction\+Down} = 0, 
+{\bfseries Elevator\+Direction\+Up}, 
+{\bfseries Elevator\+Direction\+Neutral}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum to hold the three different elevator directions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8h_ada8a6679b36fc4f29442334494afb588}\label{FSM_8h_ada8a6679b36fc4f29442334494afb588}} 
+enum \mbox{\hyperlink{FSM_8h_ada8a6679b36fc4f29442334494afb588}{Elevator\+State}} \{ \newline
+{\bfseries Elevator\+State\+Init} = 0, 
+{\bfseries Elevator\+State\+Idle}, 
+{\bfseries Elevator\+State\+Down}, 
+{\bfseries Elevator\+State\+Up}, 
+\newline
+{\bfseries Elevator\+State\+Emergency}
+ \}
+\begin{DoxyCompactList}\small\item\em Defining enum whit all the different F\+SM states. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{FSM_8h_a4bc68d2016b4febdd4e10280d44fc00a}\label{FSM_8h_a4bc68d2016b4febdd4e10280d44fc00a}} 
+void \mbox{\hyperlink{FSM_8h_a4bc68d2016b4febdd4e10280d44fc00a}{F\+S\+M\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the finite state machine by setting all orders to 0, turning off all lamps, setting all elevariables to 0/neutral. If {\ttfamily floor\+\_\+level} is not defind, the elevator wil go up and stop at a floor where it is defined. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8h_aad2a5a83f3ede046018b46b1f494812b}\label{FSM_8h_aad2a5a83f3ede046018b46b1f494812b}} 
+void \mbox{\hyperlink{FSM_8h_aad2a5a83f3ede046018b46b1f494812b}{F\+S\+M\+\_\+update}} ()
+\begin{DoxyCompactList}\small\item\em Updates the finite-\/state machine by checking all the buttons, and then taking necessary decision in order to attain elevator criterium. This include setting differnt button lights, all the logic (decision making), and changing the state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Headerfile for finite state machine. 
+

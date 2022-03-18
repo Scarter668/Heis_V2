@@ -44,16 +44,16 @@ typedef struct ElevatorVariables{
 
 /**
  * @brief Initializes the finite state machine by setting all orders to 0,
- *        turning off all lamps, setting all elevariables to 0/neutral.
- *        If @p floor_level is not defind, the elevator wil go up and stop
+ *        turning off all lamps, setting all elevatorvariables to 0/neutral.
+ *        If @p floor_level is not defined, the elevator wil go up and stop
  *        at a floor where it is defined.
  */
 void FSM_init();
 
 /**
  * @brief Updates the finite-state machine by checking all the buttons,
- *        and then taking necessary decision in order to attain elevator criterium.
- *        This include setting differnt button lights, all the logic (decision making),
+ *        and then taking necessary action in accordance with the given elevator specifications.
+ *        This includes setting the different button lights, all the logic (decision making),
  *        and changing the state. 
  */
 void FSM_update();

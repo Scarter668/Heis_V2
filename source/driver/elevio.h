@@ -1,19 +1,19 @@
 /**
  * @file
- * @brief Headerfile for controlling the elevator
+ * @brief Headerfile for controlling the elevator.
  */
 
 #pragma once
 
 
 /**
- * @brief Amount of floors
+ * @brief Number of floors.
  */
 #define N_FLOORS 4
 
 
 /**
- * @brief Struct for the three different motor states, UP, DOWN and STOP.
+ * @brief Struct for the three different motor states: UP, DOWN and STOP.
  */
 typedef enum { 
     DIRN_DOWN   = -1,
@@ -22,13 +22,13 @@ typedef enum {
 } MotorDirection;
 
 /**
- * @brief Amount of buttontypes 
+ * @brief Number of button types.
  */
 #define N_BUTTONS 3
 
 
 /**
- * @brief Struct for the three different buttons, UP, DOWN and CAB
+ * @brief Struct for the three different button types: UP, DOWN and CAB
  */
 typedef enum { 
     BUTTON_HALL_UP      = 0,
@@ -39,7 +39,7 @@ typedef enum {
 
 
 /**
- * @brief Initializes the elevator
+ * @brief Initializes the elevator.
  */
 void elevio_init(void);
 
@@ -115,7 +115,7 @@ int elevio_floorSensor(void);
 
 
 /**
- * @brief Check if the Stop button has been pressed. 
+ * @brief Check if the stop button has been pressed. 
  * 
  * @return 0 or 1 depending on the state of the button
  */

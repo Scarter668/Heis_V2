@@ -1,0 +1,229 @@
+\hypertarget{elevio_8c}{}\doxysection{source/driver/elevio.c File Reference}
+\label{elevio_8c}\index{source/driver/elevio.c@{source/driver/elevio.c}}
+
+
+Implementation file for \mbox{\hyperlink{elevio_8h}{elevio.\+h}}.  
+
+
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}elevio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}con\+\_\+load.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{elevio_8c_acec5e6d14134b881216887fe15aca830}\label{elevio_8c_acec5e6d14134b881216887fe15aca830}} 
+void \mbox{\hyperlink{elevio_8c_acec5e6d14134b881216887fe15aca830}{elevio\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Initializes the elevator. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{elevio_8c_ab2e6dcf199387c1dd6f78e2bf6fff56e}{elevio\+\_\+motor\+Direction}} (\mbox{\hyperlink{elevio_8h_ab0dd3595d7049b92115a766f0ea6f7e0}{Motor\+Direction}} dirn)
+\begin{DoxyCompactList}\small\item\em Sets the direction of the motor according to the {\ttfamily Motor\+Direction} enum. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{elevio_8c_a182079eb4c29f71ff3b5049a2fd082a3}{elevio\+\_\+button\+Lamp}} (int floor, \mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{Button\+Type}} button, int value)
+\begin{DoxyCompactList}\small\item\em Turns the button lamp on or of defined by {\ttfamily floor} and the {\ttfamily button} that is pressed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{elevio_8c_a184a3b9bd68d9f38ada735288059b823}{elevio\+\_\+floor\+Indicator}} (int floor)
+\begin{DoxyCompactList}\small\item\em Swithces the floor lamp outside of the elevator to the floor defined by {\ttfamily floor} . There is only one light at a time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{elevio_8c_a7784247f816e8beee3a0538f070d9357}{elevio\+\_\+door\+Open\+Lamp}} (int value)
+\begin{DoxyCompactList}\small\item\em Turns the door open lamp on or off depending on {\ttfamily value} . \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{elevio_8c_ac0411a180087d6ac13a3d97eda809ba0}{elevio\+\_\+stop\+Lamp}} (int value)
+\begin{DoxyCompactList}\small\item\em Turns the stop lamp on or off depending on {\ttfamily value} . This is to indicate that the elevator has been stopped. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{elevio_8c_a2485d7d293f03756a852ee1f796b9e1f}{elevio\+\_\+call\+Button}} (int floor, \mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{Button\+Type}} button)
+\begin{DoxyCompactList}\small\item\em Check if the button on a given {\ttfamily floor} with a given type, {\ttfamily button} , has been pressed. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{elevio_8c_a6c30a3c0241ebf37a9014679e1bf288d}{elevio\+\_\+floor\+Sensor}} (void)
+\begin{DoxyCompactList}\small\item\em Checks what floor the elevator is currently at. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{elevio_8c_a73cf5844bdae806dc8d0afa3e0edab70}{elevio\+\_\+stop\+Button}} (void)
+\begin{DoxyCompactList}\small\item\em Check if the Stop button has been pressed. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{elevio_8c_a96c87bf2164a6aa64d116f6137b8ee78}{elevio\+\_\+obstruction}} (void)
+\begin{DoxyCompactList}\small\item\em Check if there is an obstruction preventing the doors from closing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation file for \mbox{\hyperlink{elevio_8h}{elevio.\+h}}. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{elevio_8c_a182079eb4c29f71ff3b5049a2fd082a3}\label{elevio_8c_a182079eb4c29f71ff3b5049a2fd082a3}} 
+\index{elevio.c@{elevio.c}!elevio\_buttonLamp@{elevio\_buttonLamp}}
+\index{elevio\_buttonLamp@{elevio\_buttonLamp}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_buttonLamp()}{elevio\_buttonLamp()}}
+{\footnotesize\ttfamily void elevio\+\_\+button\+Lamp (\begin{DoxyParamCaption}\item[{int}]{floor,  }\item[{\mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{Button\+Type}}}]{button,  }\item[{int}]{value }\end{DoxyParamCaption})}
+
+
+
+Turns the button lamp on or of defined by {\ttfamily floor} and the {\ttfamily button} that is pressed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em floor} & Floor level \\
+\hline
+\mbox{\texttt{ in}}  & {\em button} & Type of button defined by struct {\ttfamily Buttontype} \\
+\hline
+\mbox{\texttt{ in}}  & {\em value} & 0 or 1 to set the lamp\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\ttfamily floor} and {\ttfamily button} are asserted to be within their range! Make sure to pass in correct values. 
+\end{DoxyWarning}
+
+
+Definition at line 59 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_a2485d7d293f03756a852ee1f796b9e1f}\label{elevio_8c_a2485d7d293f03756a852ee1f796b9e1f}} 
+\index{elevio.c@{elevio.c}!elevio\_callButton@{elevio\_callButton}}
+\index{elevio\_callButton@{elevio\_callButton}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_callButton()}{elevio\_callButton()}}
+{\footnotesize\ttfamily int elevio\+\_\+call\+Button (\begin{DoxyParamCaption}\item[{int}]{floor,  }\item[{\mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{Button\+Type}}}]{button }\end{DoxyParamCaption})}
+
+
+
+Check if the button on a given {\ttfamily floor} with a given type, {\ttfamily button} , has been pressed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em floor} & Floor level \\
+\hline
+\mbox{\texttt{ in}}  & {\em button} & Type of button defined by struct {\ttfamily Buttontype} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or 1 depending on the state of the button 
+\end{DoxyReturn}
+
+
+Definition at line 97 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_a7784247f816e8beee3a0538f070d9357}\label{elevio_8c_a7784247f816e8beee3a0538f070d9357}} 
+\index{elevio.c@{elevio.c}!elevio\_doorOpenLamp@{elevio\_doorOpenLamp}}
+\index{elevio\_doorOpenLamp@{elevio\_doorOpenLamp}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_doorOpenLamp()}{elevio\_doorOpenLamp()}}
+{\footnotesize\ttfamily void elevio\+\_\+door\+Open\+Lamp (\begin{DoxyParamCaption}\item[{int}]{value }\end{DoxyParamCaption})}
+
+
+
+Turns the door open lamp on or off depending on {\ttfamily value} . 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em value} & 1 or 0 for light on or off. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 81 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_a184a3b9bd68d9f38ada735288059b823}\label{elevio_8c_a184a3b9bd68d9f38ada735288059b823}} 
+\index{elevio.c@{elevio.c}!elevio\_floorIndicator@{elevio\_floorIndicator}}
+\index{elevio\_floorIndicator@{elevio\_floorIndicator}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_floorIndicator()}{elevio\_floorIndicator()}}
+{\footnotesize\ttfamily void elevio\+\_\+floor\+Indicator (\begin{DoxyParamCaption}\item[{int}]{floor }\end{DoxyParamCaption})}
+
+
+
+Swithces the floor lamp outside of the elevator to the floor defined by {\ttfamily floor} . There is only one light at a time. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em floor} & Floor level\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\ttfamily floor} is asserted to be within its range! Make sure to pass in correct values. 
+\end{DoxyWarning}
+
+
+Definition at line 71 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_a6c30a3c0241ebf37a9014679e1bf288d}\label{elevio_8c_a6c30a3c0241ebf37a9014679e1bf288d}} 
+\index{elevio.c@{elevio.c}!elevio\_floorSensor@{elevio\_floorSensor}}
+\index{elevio\_floorSensor@{elevio\_floorSensor}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_floorSensor()}{elevio\_floorSensor()}}
+{\footnotesize\ttfamily int elevio\+\_\+floor\+Sensor (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Checks what floor the elevator is currently at. 
+
+\begin{DoxyReturn}{Returns}
+Floor level (-\/1 if not on a floor) 
+\end{DoxyReturn}
+
+
+Definition at line 107 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_ab2e6dcf199387c1dd6f78e2bf6fff56e}\label{elevio_8c_ab2e6dcf199387c1dd6f78e2bf6fff56e}} 
+\index{elevio.c@{elevio.c}!elevio\_motorDirection@{elevio\_motorDirection}}
+\index{elevio\_motorDirection@{elevio\_motorDirection}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_motorDirection()}{elevio\_motorDirection()}}
+{\footnotesize\ttfamily void elevio\+\_\+motor\+Direction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{elevio_8h_ab0dd3595d7049b92115a766f0ea6f7e0}{Motor\+Direction}}}]{dirn }\end{DoxyParamCaption})}
+
+
+
+Sets the direction of the motor according to the {\ttfamily Motor\+Direction} enum. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em dirn} & Direction of the motor from enum struct. ~\newline
+ \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_a96c87bf2164a6aa64d116f6137b8ee78}\label{elevio_8c_a96c87bf2164a6aa64d116f6137b8ee78}} 
+\index{elevio.c@{elevio.c}!elevio\_obstruction@{elevio\_obstruction}}
+\index{elevio\_obstruction@{elevio\_obstruction}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_obstruction()}{elevio\_obstruction()}}
+{\footnotesize\ttfamily int elevio\+\_\+obstruction (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Check if there is an obstruction preventing the doors from closing. 
+
+\begin{DoxyReturn}{Returns}
+0 or 1 depending on obstruction 
+\end{DoxyReturn}
+
+
+Definition at line 127 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_a73cf5844bdae806dc8d0afa3e0edab70}\label{elevio_8c_a73cf5844bdae806dc8d0afa3e0edab70}} 
+\index{elevio.c@{elevio.c}!elevio\_stopButton@{elevio\_stopButton}}
+\index{elevio\_stopButton@{elevio\_stopButton}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_stopButton()}{elevio\_stopButton()}}
+{\footnotesize\ttfamily int elevio\+\_\+stop\+Button (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Check if the Stop button has been pressed. 
+
+\begin{DoxyReturn}{Returns}
+0 or 1 depending on the state of the button 
+\end{DoxyReturn}
+
+
+Definition at line 117 of file elevio.\+c.
+
+\mbox{\Hypertarget{elevio_8c_ac0411a180087d6ac13a3d97eda809ba0}\label{elevio_8c_ac0411a180087d6ac13a3d97eda809ba0}} 
+\index{elevio.c@{elevio.c}!elevio\_stopLamp@{elevio\_stopLamp}}
+\index{elevio\_stopLamp@{elevio\_stopLamp}!elevio.c@{elevio.c}}
+\doxysubsubsection{\texorpdfstring{elevio\_stopLamp()}{elevio\_stopLamp()}}
+{\footnotesize\ttfamily void elevio\+\_\+stop\+Lamp (\begin{DoxyParamCaption}\item[{int}]{value }\end{DoxyParamCaption})}
+
+
+
+Turns the stop lamp on or off depending on {\ttfamily value} . This is to indicate that the elevator has been stopped. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em value} & 1 or 0 for light on or off. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 88 of file elevio.\+c.
+

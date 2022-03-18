@@ -1,0 +1,105 @@
+\hypertarget{FSM_8c}{}\doxysection{source/\+F\+SM.c File Reference}
+\label{FSM_8c}\index{source/FSM.c@{source/FSM.c}}
+
+
+Implementation of funtions from \mbox{\hyperlink{FSM_8h}{F\+S\+M.\+h}}.  
+
+
+{\ttfamily \#include \char`\"{}F\+S\+M.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}timer.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stdio.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{FSM_8c_a022d8948e3b085f4a99ee5d112871535}\label{FSM_8c_a022d8948e3b085f4a99ee5d112871535}} 
+\#define {\bfseries S\+H\+O\+U\+L\+D\+\_\+\+UP}~1
+\item 
+\mbox{\Hypertarget{FSM_8c_a6b89540bc97e3b408f5ef208c96db230}\label{FSM_8c_a6b89540bc97e3b408f5ef208c96db230}} 
+\#define {\bfseries S\+H\+O\+U\+L\+D\+\_\+\+S\+T\+AY}~0
+\item 
+\mbox{\Hypertarget{FSM_8c_a3599dde9cf9c48dfe0c4d45b91b08e0f}\label{FSM_8c_a3599dde9cf9c48dfe0c4d45b91b08e0f}} 
+\#define {\bfseries S\+H\+O\+U\+L\+D\+\_\+\+D\+O\+WN}~-\/1
+\item 
+\mbox{\Hypertarget{FSM_8c_a1b901b7f5fe255e94b2637c2262ce07b}\label{FSM_8c_a1b901b7f5fe255e94b2637c2262ce07b}} 
+\#define {\bfseries N\+O\+\_\+\+D\+E\+C\+I\+S\+I\+ON}~-\/11
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{FSM_8c_a0943e7d593cc4be6c04b1d7c7bde59eb}\label{FSM_8c_a0943e7d593cc4be6c04b1d7c7bde59eb}} 
+void {\bfseries print\+States} ()
+\item 
+\mbox{\Hypertarget{FSM_8c_a4bc68d2016b4febdd4e10280d44fc00a}\label{FSM_8c_a4bc68d2016b4febdd4e10280d44fc00a}} 
+void \mbox{\hyperlink{FSM_8c_a4bc68d2016b4febdd4e10280d44fc00a}{F\+S\+M\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the finite state machine by setting all orders to 0, turning off all lamps, setting all elevariables to 0/neutral. If {\ttfamily floor\+\_\+level} is not defind, the elevator wil go up and stop at a floor where it is defined. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8c_a1685d9b5092a0f8d0532d717a1b97c65}\label{FSM_8c_a1685d9b5092a0f8d0532d717a1b97c65}} 
+void \mbox{\hyperlink{FSM_8c_a1685d9b5092a0f8d0532d717a1b97c65}{F\+S\+M\+\_\+update\+Btns\+And\+Lights}} ()
+\begin{DoxyCompactList}\small\item\em Updates {\ttfamily m\+\_\+elevator\+\_\+buttons} array with the new values from elevio. Only updates if there is not an active order. Also sets the corresponding buttonlights according to the array. ~\newline
+ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8c_a96abfa3e222ba02c1d6941b50b07bab8}\label{FSM_8c_a96abfa3e222ba02c1d6941b50b07bab8}} 
+\mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} {\bfseries F\+S\+M\+\_\+order\+Abovefloor} (int floor)
+\item 
+\mbox{\Hypertarget{FSM_8c_a870a813bbab66cb7643d05ede934deb8}\label{FSM_8c_a870a813bbab66cb7643d05ede934deb8}} 
+\mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} {\bfseries F\+S\+M\+\_\+order\+Belowfloor} (int floor)
+\item 
+\mbox{\Hypertarget{FSM_8c_a40af9e55f4888bba9c8a5275fc1cf718}\label{FSM_8c_a40af9e55f4888bba9c8a5275fc1cf718}} 
+void {\bfseries F\+S\+M\+\_\+set\+Door} (\mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} open)
+\item 
+\mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} \mbox{\hyperlink{FSM_8c_a1133a5afa9fc3cb9110a58bd4fe174e2}{F\+S\+M\+\_\+\+Idle\+Trigger}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the elevator should stop and to enter an Idle state. Is elevator on a floor with orders. If not and on a floor, update the {\ttfamily floor\+\_\+level} variable to floor pluss/minus 0.\+5 depending on the direction. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8c_a8bf87dbb095817adaf314661370898b4}\label{FSM_8c_a8bf87dbb095817adaf314661370898b4}} 
+void \mbox{\hyperlink{FSM_8c_a8bf87dbb095817adaf314661370898b4}{F\+S\+M\+\_\+\+Idle\+Entry}} ()
+\begin{DoxyCompactList}\small\item\em Completes the routine that should be done everytime the elevator enter Idle state. That is to stop the motor, open the door, and remove orders on the floor and turn off their corresponding lights. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8c_a1a948e60edcfa334e5a3ee2bd608d15c}\label{FSM_8c_a1a948e60edcfa334e5a3ee2bd608d15c}} 
+void \mbox{\hyperlink{FSM_8c_a1a948e60edcfa334e5a3ee2bd608d15c}{F\+S\+M\+\_\+\+Emergency\+Entry}} ()
+\begin{DoxyCompactList}\small\item\em Completes the routine that should be done whenever emergency state is entered. Thid includes stoping the motor, turnin on the stoplamp, deleting all orders in the {\ttfamily m\+\_\+elevator\+\_\+buttons} array. If the elevator is on a floor, the door is also be opened. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{FSM_8c_a0ea7a668648f5b8404a13d1c88d0bc07}{F\+S\+M\+\_\+\+Idle\+Routine\+\_\+decision}} ()
+\begin{DoxyCompactList}\small\item\em Generates correct decision for elevator to be used in Idle state when makin a decition of what to do next. This loops throught the {\ttfamily m\+\_\+elevator\+\_\+buttons} array differently depending on what direction the elevator has. If the elevator has a direction up, it loops through the upper part of the array, and vice versa for direction down. If the elevator is in a nuetral direction, it loops through the array from the first floor and up (and return as soon as an order is found unless it is the floor you are). This means that floor lower floor levels will be prioritized. ~\newline
+ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{FSM_8c_aad2a5a83f3ede046018b46b1f494812b}\label{FSM_8c_aad2a5a83f3ede046018b46b1f494812b}} 
+void \mbox{\hyperlink{FSM_8c_aad2a5a83f3ede046018b46b1f494812b}{F\+S\+M\+\_\+update}} ()
+\begin{DoxyCompactList}\small\item\em Updates the finite-\/state machine by checking all the buttons, and then taking necessary decision in order to attain elevator criterium. This include setting differnt button lights, all the logic (decision making), and changing the state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of funtions from \mbox{\hyperlink{FSM_8h}{F\+S\+M.\+h}}. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{FSM_8c_a0ea7a668648f5b8404a13d1c88d0bc07}\label{FSM_8c_a0ea7a668648f5b8404a13d1c88d0bc07}} 
+\index{FSM.c@{FSM.c}!FSM\_IdleRoutine\_decision@{FSM\_IdleRoutine\_decision}}
+\index{FSM\_IdleRoutine\_decision@{FSM\_IdleRoutine\_decision}!FSM.c@{FSM.c}}
+\doxysubsubsection{\texorpdfstring{FSM\_IdleRoutine\_decision()}{FSM\_IdleRoutine\_decision()}}
+{\footnotesize\ttfamily int F\+S\+M\+\_\+\+Idle\+Routine\+\_\+decision (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Generates correct decision for elevator to be used in Idle state when makin a decition of what to do next. This loops throught the {\ttfamily m\+\_\+elevator\+\_\+buttons} array differently depending on what direction the elevator has. If the elevator has a direction up, it loops through the upper part of the array, and vice versa for direction down. If the elevator is in a nuetral direction, it loops through the array from the first floor and up (and return as soon as an order is found unless it is the floor you are). This means that floor lower floor levels will be prioritized. ~\newline
+ 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily S\+H\+O\+U\+L\+D\+\_\+\+UP} , {\ttfamily S\+H\+O\+U\+L\+D\+\_\+\+S\+T\+AY} , {\ttfamily S\+H\+O\+U\+L\+D\+\_\+\+D\+O\+WN} or {\ttfamily N\+O\+\_\+\+D\+E\+C\+I\+S\+I\+ON} depending on the current orders. 
+\end{DoxyReturn}
+
+
+Definition at line 238 of file F\+S\+M.\+c.
+
+\mbox{\Hypertarget{FSM_8c_a1133a5afa9fc3cb9110a58bd4fe174e2}\label{FSM_8c_a1133a5afa9fc3cb9110a58bd4fe174e2}} 
+\index{FSM.c@{FSM.c}!FSM\_IdleTrigger@{FSM\_IdleTrigger}}
+\index{FSM\_IdleTrigger@{FSM\_IdleTrigger}!FSM.c@{FSM.c}}
+\doxysubsubsection{\texorpdfstring{FSM\_IdleTrigger()}{FSM\_IdleTrigger()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{defines_8h_abb452686968e48b67397da5f97445f5b}{bool}} F\+S\+M\+\_\+\+Idle\+Trigger (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the elevator should stop and to enter an Idle state. Is elevator on a floor with orders. If not and on a floor, update the {\ttfamily floor\+\_\+level} variable to floor pluss/minus 0.\+5 depending on the direction. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} or {\ttfamily false} depending on whether the idle entry condition are met. 
+\end{DoxyReturn}
+
+
+Definition at line 159 of file F\+S\+M.\+c.
+
